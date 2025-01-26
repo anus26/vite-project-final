@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import QRCode from "react-qr-code";
 
 const BeneficiaryForm = () => {
   const [formData, setFormData] = useState({
@@ -8,13 +9,16 @@ const BeneficiaryForm = () => {
     address: '',
     purpose: '',
     department: '',
-    status: 'Active', // Default status
+    status: 'Active', 
   });
   const [token, setToken] = useState(""); 
   const [errors, setErrors] = useState({});
- // Sample list of purposes and departments
- const purposes = ["Education", "Healthcare", "Charity", "Government Assistance"];
- const departments = ["Finance", "HR", "Admin", "IT", "Operations"];
+  const [Qrcode,setQRCode]=useState('')
+  
+  
+  const purposes = ["Education", "Healthcare", "Charity", "Government Assistance"];
+  const departments = ["Finance", "HR", "Admin", "IT", "Operations"];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -22,7 +26,8 @@ const BeneficiaryForm = () => {
       [name]: value,
     }));
   };
-//   validate
+
+  // Validate
   const validate = () => {
     const newErrors = {};
     const cnicPattern = /^\d{5}-\d{7}-\d{1}$/; // CNIC format #####-#######-#
@@ -36,14 +41,15 @@ const BeneficiaryForm = () => {
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0; // Return true if no errors
+    return Object.keys(newErrors).length === 0; 
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) {
-        return; // Stop submission if validation fails
-      }
-  
+      return; 
+    }
+
     try {
       const response = await fetch('http://localhost:5000/api/v1/register', {
         method: 'POST',
@@ -55,10 +61,10 @@ const BeneficiaryForm = () => {
 
       if (response.ok) {
         const result = await response.json();
-        setToken(result.token);
- 
-        console.log('Beneficiary registered:', result,token);
-        // Optionally, reset the form or provide feedback
+        setToken(result.token); 
+        setQRCode(result.Qrcode)
+
+        console.log('Beneficiary registered:', result, token,Qrcode);
         setFormData({
           cnic: '',
           name: '',
@@ -67,8 +73,6 @@ const BeneficiaryForm = () => {
           purpose: '',
           department: '',
           status: 'Active',
-          
-          
         });
         setErrors({});
       } else {
@@ -81,7 +85,7 @@ const BeneficiaryForm = () => {
 
   return (
     <div className="container mt-5">
-      <h1>Receiption</h1>
+      <h1>Reception</h1>
       <h2>Beneficiary Form</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
@@ -95,7 +99,7 @@ const BeneficiaryForm = () => {
             onChange={handleChange}
             required
           />
-                 {errors.cnic && <div className="text-danger">{errors.cnic}</div>}
+          {errors.cnic && <div className="text-danger">{errors.cnic}</div>}
         </div>
 
         <div className="mb-3">
@@ -122,7 +126,7 @@ const BeneficiaryForm = () => {
             onChange={handleChange}
             required
           />
-                  {errors.phone && <div className="text-danger">{errors.phone}</div>}
+          {errors.phone && <div className="text-danger">{errors.phone}</div>}
         </div>
 
         <div className="mb-3">
@@ -155,7 +159,6 @@ const BeneficiaryForm = () => {
               </option>
             ))}
           </select>
-
         </div>
 
         <div className="mb-3">
@@ -194,12 +197,24 @@ const BeneficiaryForm = () => {
 
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
-    
-     {/* Display Token */}
-     {token && (
+
+      {/* Display Token */}
+      {token && (
         <div className="mt-3">
           <h4>Generated Token</h4>
           <p>{token}</p>
+        </div>
+      )}
+
+      {/* Display QR Code */}
+      {Qrcode && (
+        <div style={{ height: "auto", margin: "0 auto", maxWidth: 64, width: "100%" }}>
+          <QRCode
+            size={256}
+            style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+            value={Qrcode} 
+            viewBox={`0 0 256 256`}
+          />
         </div>
       )}
     </div>
