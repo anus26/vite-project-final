@@ -1,16 +1,19 @@
 import { Outlet } from 'react-router-dom';
+import { ResponsiveAppBar} from './Components/Navabar.jsx';  // Correct path
 
 const Layout = () => {
   return (
     <div>
-      <header>
-        {/* Your header, navbar, etc. */}
-      </header>
-      <main>
+     
+        <ResponsiveAppBar />
+      
+    
         <Outlet />  {/* This renders the child routes */}
-      </main>
+      
     </div>
   );
 };
 
 export default Layout;
+
+
