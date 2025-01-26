@@ -93,100 +93,105 @@ const Admin = () => {
   return (
     <div className="container mt-5">
       <h2>Admin Dashboard</h2>
-      <h3>Beneficiaries List</h3>
-      <table className="table table-striped">
-        <thead>
-          <tr>
-            <th>CNIC</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Purpose</th>
-            <th>Department</th>
-            <th>Status</th>
-            <th>Remarks</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {beneficiaries.map((beneficiary) => (
-            <tr key={beneficiary._id}>
-              <td>{beneficiary.cnic}</td>
-              <td>{beneficiary.name}</td>
-              <td>{beneficiary.phone}</td>
-              <td>{beneficiary.address}</td>
-              <td>{beneficiary.purpose}</td>
-              <td>{beneficiary.department}</td>
-              <td>
-                {editingCnic === beneficiary.cnic ? (
-                  <input
-                    type="text"
-                    name="status"
-                    value={updateData.status}
-                    placeholder="New Status"
-                    className="form-control"
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  beneficiary.status
-                )}
-              </td>
-              <td>
-                {editingCnic === beneficiary.cnic ? (
-                  <input
-                    type="text"
-                    name="remarks"
-                    value={updateData.remarks}
-                    placeholder="Remarks"
-                    className="form-control"
-                    onChange={handleInputChange}
-                  />
-                ) : (
-                  beneficiary.remarks || "-"
-                )}
-              </td>
-              <td>
-                {editingCnic === beneficiary.cnic ? (
-                  <>
-                    <button
-                      className="btn btn-success btn-sm me-2"
-                      onClick={() => handleUpdate(beneficiary.cnic)}
-                    >
-                      Save
-                    </button>
-                    <button
-                      className="btn btn-secondary btn-sm"
-                      onClick={() => setEditingCnic(null)}
-                    >
-                      Cancel
-                    </button>
-                  </>
-                ) : (
-                  <>
-                    <button
-                      className="btn btn-primary btn-sm me-2"
-                      onClick={() => setEditingCnic(beneficiary.cnic)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      className="btn btn-danger btn-sm"
-                      onClick={() => handleDelete(beneficiary.cnic)}
-                    >
-                      Delete
-                    </button>
-                  </>
-                )}
-              </td>
+      <h3 className="mt-3">Beneficiaries List</h3>
+
+      {/* Add responsiveness to the table */}
+      <div className="table-responsive">
+        <table className="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>CNIC</th>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Address</th>
+              <th>Purpose</th>
+              <th>Department</th>
+              <th>Status</th>
+              <th>Remarks</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {beneficiaries.map((beneficiary) => (
+              <tr key={beneficiary._id}>
+                <td>{beneficiary.cnic}</td>
+                <td>{beneficiary.name}</td>
+                <td>{beneficiary.phone}</td>
+                <td>{beneficiary.address}</td>
+                <td>{beneficiary.purpose}</td>
+                <td>{beneficiary.department}</td>
+                <td>
+                  {editingCnic === beneficiary.cnic ? (
+                    <input
+                      type="text"
+                      name="status"
+                      value={updateData.status}
+                      placeholder="New Status"
+                      className="form-control"
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    beneficiary.status
+                  )}
+                </td>
+                <td>
+                  {editingCnic === beneficiary.cnic ? (
+                    <input
+                      type="text"
+                      name="remarks"
+                      value={updateData.remarks}
+                      placeholder="Remarks"
+                      className="form-control"
+                      onChange={handleInputChange}
+                    />
+                  ) : (
+                    beneficiary.remarks || "-"
+                  )}
+                </td>
+                <td>
+                  {editingCnic === beneficiary.cnic ? (
+                    <>
+                      <button
+                        className="btn btn-success btn-sm me-2"
+                        onClick={() => handleUpdate(beneficiary.cnic)}
+                      >
+                        Save
+                      </button>
+                      <button
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => setEditingCnic(null)}
+                      >
+                        Cancel
+                      </button>
+                    </>
+                  ) : (
+                    <>
+                      <button
+                        className="btn btn-primary btn-sm me-2"
+                        onClick={() => setEditingCnic(beneficiary.cnic)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-danger btn-sm"
+                        onClick={() => handleDelete(beneficiary.cnic)}
+                      >
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
 
 export default Admin;
+
 
     
 
