@@ -2,9 +2,10 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Home from './pages/Home.jsx';  // Corrected import
-import Layout from './Components/Layout.jsx';  // Assuming Layout exists
-import Notfound from './pages/Notfound.jsx'; // Assuming Notfound exists
+import Home from './pages/Home.jsx';  
+import Layout from './Components/Layout.jsx';  
+import Notfound from './pages/Notfound.jsx'; 
+import Admin from './pages/Admin.jsx';
 import './index.css';
 
 const router = createBrowserRouter([
@@ -12,7 +13,8 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />, 
     children: [
-      { path: "/", element: <Home /> }, 
+        { path: "home", element: <Home /> },
+      {path:"admin", element:<Admin/>},
       { path: "*", element: <Notfound /> }, // Catch-all for 404
     ],
   },
