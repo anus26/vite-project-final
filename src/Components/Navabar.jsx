@@ -12,7 +12,7 @@ const ResponsiveAppBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="me-auto">
             <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/admin">Admin</Nav.Link>
+            <Nav.Link href="admin">Admin</Nav.Link>
           </Nav>
           <Nav>
             
