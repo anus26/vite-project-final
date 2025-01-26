@@ -14,7 +14,7 @@ const router = createBrowserRouter([
     element: <Layout />, 
     children: [
         { path: "/", element: <Home /> },
-      {path:"admin", element:<Admin/>},
+      {path:"/admin", element:<Admin/>},
       { path: "*", element: <Notfound /> }, // Catch-all for 404
     ],
   },
