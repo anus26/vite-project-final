@@ -11,7 +11,7 @@ const Admin = () => {
   useEffect(() => {
     const fetchBeneficiaries = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/v1/getall");
+        const response = await fetch("https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/getall");
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
