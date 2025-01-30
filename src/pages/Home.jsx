@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import QRCode from "react-qr-code";
+import QRCodeScanner from "../Qrscanner.jsx";
 
 const BeneficiaryForm = () => {
   const [formData, setFormData] = useState({
@@ -14,7 +15,8 @@ const BeneficiaryForm = () => {
   const [token, setToken] = useState(""); 
   const [errors, setErrors] = useState({});
   const [Qrcode,setQRCode]=useState('')
-  
+  const [qrValue, setQrValue] = useState("");
+  const [qrImage, setQrImage] = useState(null);
   
   const purposes = ["Education", "Healthcare", "Charity", "Government Assistance"];
   const departments = ["Finance", "HR", "Admin", "IT", "Operations"];
@@ -39,17 +41,19 @@ const BeneficiaryForm = () => {
     if (!phonePattern.test(formData.phone)) {
       newErrors.phone = "Phone number must start with 03 and have 11 digits.";
     }
-
+    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0; 
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // / Generate QR Code Image
     if (!validate()) {
       return; 
     }
-
+   
+    
     try {
       const response = await fetch('https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/register', {
         method: 'POST',
@@ -58,12 +62,12 @@ const BeneficiaryForm = () => {
         },
         body: JSON.stringify(formData),
       });
-
+      
       if (response.ok) {
         const result = await response.json();
         setToken(result.token); 
         setQRCode(result.Qrcode)
-
+        
         console.log('Beneficiary registered:', result, token,Qrcode);
         setFormData({
           cnic: '',
@@ -82,7 +86,7 @@ const BeneficiaryForm = () => {
       console.error('Network error:', error);
     }
   };
-
+  
   return (
     <div className="container mt-5">
       <h1>Reception</h1>
@@ -98,7 +102,7 @@ const BeneficiaryForm = () => {
             value={formData.cnic}
             onChange={handleChange}
             required
-          />
+            />
           {errors.cnic && <div className="text-danger">{errors.cnic}</div>}
         </div>
 
@@ -125,7 +129,7 @@ const BeneficiaryForm = () => {
             value={formData.phone}
             onChange={handleChange}
             required
-          />
+            />
           {errors.phone && <div className="text-danger">{errors.phone}</div>}
         </div>
 
@@ -151,7 +155,7 @@ const BeneficiaryForm = () => {
             value={formData.purpose}
             onChange={handleChange}
             required
-          >
+            >
             <option value="">Select Purpose</option>
             {purposes.map((purpose, index) => (
               <option key={index} value={purpose}>
@@ -197,6 +201,13 @@ const BeneficiaryForm = () => {
 
         <button type="submit" className="btn btn-primary">Submit</button>
       </form>
+      {departments.map((department, index) => (
+  <div key={index} style={{ marginBottom: "20px" }}>
+    <h2>QR Code for {department}</h2>
+    <QRCode value={department} size={128} />
+  </div>
+))}
+
 
       {/* Display Token */}
       {token && (
@@ -217,8 +228,11 @@ const BeneficiaryForm = () => {
           />
         </div>
       )}
+      
+      <QRCodeScanner />
     </div>
   );
-};
+}
+
 
 export default BeneficiaryForm;
