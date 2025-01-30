@@ -36,7 +36,7 @@ const Admin = () => {
   // Handle update request
   const handleUpdate = async (cnic) => {
     try {
-      const response = await fetch(`https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/${cnic}`, {
+      const response = await fetch(`https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/update/${cnic}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updateData),
@@ -70,7 +70,7 @@ const Admin = () => {
     if (!window.confirm("Are you sure you want to delete this beneficiary?")) return;
 
     try {
-      const response = await fetch(`https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/${cnic}`, {
+      const response = await fetch(`https://basic-lilian-anusraza123bm-892bbe7d.koyeb.app/api/v1/delete/${cnic}`, {
         method: "DELETE",
       });
 
